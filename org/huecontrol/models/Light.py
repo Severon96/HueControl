@@ -21,7 +21,11 @@ class Light:
         self.name = response_body["name"]
 
     def toggle_power(self):
-        set_light_power(self.bridge, self.id, not self.power)
+        self.power = not self.power
+        set_light_power(self.bridge, self.id, self.power)
 
     def set_light_color(self, hue: int):
         set_light_color(self.bridge, self.id, hue)
+        self.sat = 254
+        self.bri = 254
+        self.hue = hue
