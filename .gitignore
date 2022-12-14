@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # Project development specific
-cli.py
+main.py
 bridge_user.p
 .cached_ip_important
 .cached_username_important
