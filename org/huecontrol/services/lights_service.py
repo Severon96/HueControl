@@ -1,10 +1,10 @@
-from org.huecontrol.requests.hue_requests import get_request, Request_Paths
-from org.huecontrol.models.Light import Light
+from org.huecontrol.requests.hue_requests import get_request, put_request, Request_Paths
+from org.huecontrol.models.Bridge import Bridge
 
 
-def get_all_lights(bridge_address, username):
+def get_all_lights(bridge: Bridge):
     response = get_request(
-        "{}{}/{}/lights".format(bridge_address, str(Request_Paths.API.value), username))
+        "{}{}/{}/lights".format(bridge.bridge_address, str(Request_Paths.API.value), bridge.username))
 
     if response.status_code == 200:
         response_body = response.json()
@@ -19,9 +19,9 @@ def get_all_lights(bridge_address, username):
         print("something went wrong while fetching lights")
 
 
-def get_light(bridge_address: str, username: str, light: int):
+def get_light(bridge: Bridge, light: int):
     response = get_request(
-        "{}{}/{}/lights/{}".format(bridge_address, str(Request_Paths.API.value), username, light))
+        "{}{}/{}/lights/{}".format(bridge.bridge_address, str(Request_Paths.API.value), bridge.username, light))
 
     if response.status_code == 200:
         response_body = response.json()
@@ -33,3 +33,9 @@ def get_light(bridge_address: str, username: str, light: int):
             print(response_body["error"]["description"])
     else:
         print("something went wrong while fetching lights")
+
+
+def set_light_power(bridge: Bridge, light: int, power: bool):
+    response = put_request(
+        "{}{}/{}/lights/{}/state".format(bridge.bridge_address, str(Request_Paths.API.value), bridge.username, light), { "on": power})
+    print(response.json())
