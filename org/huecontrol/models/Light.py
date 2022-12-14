@@ -1,9 +1,8 @@
 from org.huecontrol.models.Bridge import Bridge
-from org.huecontrol.services.lights_service import set_light_power
+from org.huecontrol.services.lights_service import set_light_power, set_light_color
 
 
 class Light:
-
     bridge: Bridge
     id: int
     power: bool
@@ -24,4 +23,5 @@ class Light:
     def toggle_power(self):
         set_light_power(self.bridge, self.id, not self.power)
 
-
+    def set_light_color(self, hue: int):
+        set_light_color(self.bridge, self.id, hue)
